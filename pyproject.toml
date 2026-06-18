@@ -12,5 +12,4 @@ dependencies = [
     "opencv-contrib-python>=4.13.0.92",
     "pillow>=12.2.0",
     "python-dotenv>=1.2.2",
-    "yomitoku>=0.13.0",
 ]
