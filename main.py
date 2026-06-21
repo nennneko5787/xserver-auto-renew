@@ -146,6 +146,13 @@ async def main():
         logger.error("Failed to get confirmation uniqid")
         raise Exception("Failed to get uniq id")
 
+    if element := soup.select_one('div[class="cf-turnstile"]'):
+        sitekey = element.attrs["data-sitekey"]
+        logger.info(f"Got turnstile sitekey: {uniqId[:10]}...")
+    else:
+        logger.error("Failed to get turnstile sitekey")
+        raise Exception("Failed to get turnstile sitekey")
+    
     # Get captcha image
     logger.info("Extracting captcha image...")
 
@@ -177,7 +184,7 @@ async def main():
     logger.info("Sending captcha to Gemini OCR...")
 
     response = await client.aio.models.generate_content(
-        model="gemma-4-26b-a4b-it",
+        model="gemma-4-31b-it",
         contents=[
             '画像に書いてある文字をそのままひらがなだけで読んでください。説明不要。スペースなし。ひらがな(["いち", "に", "さん", "よん", "ご", "ろく", "なな", "はち", "きゅう"])のみ出力。文字同士が重なっている場合があります。',
             types.Part.from_bytes(
@@ -206,7 +213,7 @@ async def main():
 
     """
     response = await http.get(
-        "http://localhost:5000/turnstile?url=https://secure.xserver.ne.jp&sitekey=0x4AAAAAABlb1fIlWBrSDU3B"
+        f"http://localhost:5000/turnstile?url=https://secure.xserver.ne.jp&sitekey={sitekey}"
     )
     jsonData = response.json()
     print(jsonData)
@@ -234,7 +241,7 @@ async def main():
 
     value = await solveTurnstile(
         url="https://secure.xserver.ne.jp/xapanel/xvps/server/freevps/extend/conf",
-        sitekey="0x4AAAAAABlb1fIlWBrSDU3B",
+        sitekey=sitekey,
     )
 
     logger.info("Turnstile solved successfully")
