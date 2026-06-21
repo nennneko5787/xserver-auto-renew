@@ -148,7 +148,7 @@ async def main():
 
     if element := soup.select_one('div[class="cf-turnstile"]'):
         sitekey = element.attrs["data-sitekey"]
-        logger.info(f"Got turnstile sitekey: {uniqId[:10]}...")
+        logger.info(f"Got turnstile sitekey: {sitekey[:10]}...")
     else:
         logger.error("Failed to get turnstile sitekey")
         raise Exception("Failed to get turnstile sitekey")
