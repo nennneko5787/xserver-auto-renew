@@ -61,6 +61,7 @@ def convert(text):
 
 http = httpx.AsyncClient(
     timeout=None,
+    follow_redirects=True,
     event_hooks={
         "request": [log_request],
         "response": [log_response],
