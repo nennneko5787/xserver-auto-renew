@@ -62,6 +62,9 @@ def convert(text):
 http = httpx.AsyncClient(
     timeout=None,
     follow_redirects=True,
+    headers={
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+    }
     event_hooks={
         "request": [log_request],
         "response": [log_response],
