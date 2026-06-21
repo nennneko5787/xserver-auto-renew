@@ -179,7 +179,7 @@ async def main():
     response = await client.aio.models.generate_content(
         model="gemma-4-26b-a4b-it",
         contents=[
-            '画像に書いてある文字をそのままひらがなだけで読んでください。説明不要。スペースなし。ひらがな(["いち", "に", "さん", "よん", "ご", "ろく", "なな", "はち", "きゅう"])のみ出力。',
+            '画像に書いてある文字をそのままひらがなだけで読んでください。説明不要。スペースなし。ひらがな(["いち", "に", "さん", "よん", "ご", "ろく", "なな", "はち", "きゅう"])のみ出力。文字同士が重なっている場合があります。',
             types.Part.from_bytes(
                 data=result,
                 mime_type="image/png",
